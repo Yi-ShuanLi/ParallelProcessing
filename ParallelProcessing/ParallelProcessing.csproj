@@ -7,4 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="CSV">
+      <HintPath>..\..\CSV\CSV\bin\Debug\CSV.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
