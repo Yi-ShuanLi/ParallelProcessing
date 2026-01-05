@@ -59,7 +59,6 @@ namespace BenchmarkDotnet效能測試好簡單
                 ReadOnlySpan<char> strings = data.AsSpan();
                 int current = 0;
                 int field = 0;
-                string[] datas = new string[6];
                 CSVMockData cSVMockData = new CSVMockData();
                 while (true)
                 {
