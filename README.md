@@ -236,3 +236,45 @@
 | 2,500,000 | 13,000,000 | 14.9        | 13.76           | 36.16         | 4.8GB          |
 | 2,500,000 | 14,000,000 | 6.8         | 12.91           | 30.23         | 5.1GB          |
 | 2,500,000 | 15,000,000 | 6.73        | 14.24           | 33.14         | 5.5GB          |
+
+### 優化項目 1-1(Read): 單純使用 Split & Span
+
+| Method       |     Mean |   Error |  StdDev |   Gen0 | Allocated |
+| ------------ | -------: | ------: | ------: | -----: | --------: |
+| Read         | 211.8 ns | 3.39 ns | 3.17 ns | 0.1113 |     585 B |
+| OptimizeRead | 260.2 ns | 3.86 ns | 3.61 ns | 0.0501 |     264 B |
+
+### 優化項目 1-2(Read): 使用 Split & Span 並加上反射
+
+| Method       |     Mean |     Error |    StdDev |   Median |   Gen0 | Allocated |
+| ------------ | -------: | --------: | --------: | -------: | -----: | --------: |
+| Read         | 1.708 us | 0.0566 us | 0.1668 us | 1.649 us | 0.1602 |     845 B |
+| OptimizeRead | 1.521 us | 0.0171 us | 0.0143 us | 1.522 us | 0.0992 |     525 B |
+
+### 優化項目 1-3(Read): 使用 Split & Span 並加上反射 & GetProperty 只做一次
+
+| Method       |     Mean |     Error |    StdDev |   Gen0 | Allocated |
+| ------------ | -------: | --------: | --------: | -----: | --------: |
+| Read         | 1.561 us | 0.0312 us | 0.0539 us | 0.1526 |     809 B |
+| OptimizeRead | 1.022 us | 0.0203 us | 0.0475 us | 0.0916 |     489 B |
+
+###　優化項目 1-4(Read): 使用 Split & Span 並加上反射 & GetProperty 只做一次 & 透過 delegate 製作 Setter 方法
+
+| Method       |       Mean |     Error |    StdDev |   Gen0 | Allocated |
+| ------------ | ---------: | --------: | --------: | -----: | --------: |
+| Read         | 1,668.0 ns | 115.61 ns | 339.07 ns | 0.1526 |     809 B |
+| OptimizeRead |   481.2 ns |  18.67 ns |  55.05 ns | 0.0563 |     296 B |
+
+### 優化項目 1-5(Read): 使用 Split & Span 並加上反射 & GetProperty 只做一次 & 透過 delegate 製作 Setter 方法 & 分片操作完就直接呼叫 Setter
+
+| Method       |     Mean |    Error |   StdDev |   Gen0 | Allocated |
+| ------------ | -------: | -------: | -------: | -----: | --------: |
+| Read         | 872.4 ns | 17.27 ns | 20.56 ns | 0.1535 |     809 B |
+| OptimizeRead | 302.9 ns |  4.20 ns |  3.93 ns | 0.0496 |     260 B |
+
+### 優化項目 1-7(Read): 使用 Split & Span 並加上反射 & GetProperty 只做一次 & 透過 delegate 製作 Setter 方法 & 分片操作完就直接呼叫 Setter (各跑 250 萬次)
+
+| Method       |       Mean |    Error |   StdDev |        Gen0 |  Allocated |
+| ------------ | ---------: | -------: | -------: | ----------: | ---------: |
+| Read         | 2,305.0 ms | 43.66 ms | 50.28 ms | 385000.0000 | 1929.26 MB |
+| OptimizeRead |   761.2 ms |  1.48 ms |  1.24 ms | 124000.0000 |   620.8 MB |
