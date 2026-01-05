@@ -272,9 +272,30 @@
 | Read         | 872.4 ns | 17.27 ns | 20.56 ns | 0.1535 |     809 B |
 | OptimizeRead | 302.9 ns |  4.20 ns |  3.93 ns | 0.0496 |     260 B |
 
+### 優化項目 1-6(Read): 使用 Split & Span 並加上反射 & GetProperty 只做一次 & 透過 delegate 製作 Setter 方法 (各跑 250 萬次)
+
+| Method       |       Mean |    Error |   StdDev |        Gen0 |  Allocated |
+| ------------ | ---------: | -------: | -------: | ----------: | ---------: |
+| Read         | 2,408.7 ms | 23.19 ms | 21.69 ms | 385000.0000 | 1929.26 MB |
+| OptimizeRead |   836.8 ms |  6.74 ms |  5.63 ms | 141000.0000 |  706.76 MB |
+
 ### 優化項目 1-7(Read): 使用 Split & Span 並加上反射 & GetProperty 只做一次 & 透過 delegate 製作 Setter 方法 & 分片操作完就直接呼叫 Setter (各跑 250 萬次)
 
 | Method       |       Mean |    Error |   StdDev |        Gen0 |  Allocated |
 | ------------ | ---------: | -------: | -------: | ----------: | ---------: |
 | Read         | 2,305.0 ms | 43.66 ms | 50.28 ms | 385000.0000 | 1929.26 MB |
 | OptimizeRead |   761.2 ms |  1.48 ms |  1.24 ms | 124000.0000 |   620.8 MB |
+
+### 優化項目 2-1(Writer): 加上反射 & 棄用 TrimEnd() 改用 if 邏輯拼接,
+
+| Method        |     Mean |    Error |   StdDev |   Gen0 | Allocated |
+| ------------- | -------: | -------: | -------: | -----: | --------: |
+| Write         | 741.8 ns | 11.40 ns | 10.67 ns | 0.1020 |     537 B |
+| OptimizeWrite | 720.0 ns |  6.37 ns |  5.32 ns | 0.1202 |     633 B |
+
+### 優化項目 2-2(Writer): 加上反射 & GetProperty 只做一次 & 透過 delegate 製作 Getter 方法
+
+| Method        |     Mean |    Error |   StdDev |   Gen0 | Allocated |
+| ------------- | -------: | -------: | -------: | -----: | --------: |
+| Write         | 816.0 ns | 16.18 ns | 34.14 ns | 0.0954 |     501 B |
+| OptimizeWrite | 218.0 ns |  2.81 ns |  4.38 ns | 0.0954 |     501 B |

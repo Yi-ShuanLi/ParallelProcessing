@@ -11,8 +11,8 @@ namespace BenchmarkDotnet效能測試好簡單
     {
         static void Main(string[] args)
         {
-            var summary = BenchmarkRunner.Run<Read_VS_OptimizeRead>();
-
+            //var summary = BenchmarkRunner.Run<Read_VS_OptimizeRead>();
+            var summary = BenchmarkRunner.Run<Write_VS_OptimizeWrite>();
             #region 我的方法
             //string data = "37,Breena,Dumbelton,bdumbelton10@constantcontact.com,Female,15.34.171.241";
             //ReadOnlySpan<char> chars = data.AsSpan();
