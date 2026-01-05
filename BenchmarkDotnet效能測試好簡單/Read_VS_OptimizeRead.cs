@@ -66,21 +66,15 @@ namespace BenchmarkDotnet效能測試好簡單
                     int num = strings.Slice(current).IndexOf(',');
                     if (num == -1)
                     {
-                        datas[field++] = strings.Slice(current).ToString();
+                        setters[field++](cSVMockData, strings.Slice(current).ToString());                      
                         break;
                     }
                     else
                     {
-                        datas[field++] = strings.Slice(current, num).ToString();
+                        setters[field++](cSVMockData, strings.Slice(current, num).ToString());                        
                         current += num + 1;
                     }
-                }
-
-                for (int i = 0; i < props.Length; i++)
-                {
-                    setters[i](cSVMockData, datas[i]);
-                    //props[i].SetValue();
-                }
+                }              
             }
 
         }
