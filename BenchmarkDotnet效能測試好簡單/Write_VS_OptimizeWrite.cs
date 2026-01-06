@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -13,6 +14,8 @@ namespace BenchmarkDotnet效能測試好簡單
     [MemoryDiagnoser]
     public class Write_VS_OptimizeWrite
     {
+        static StringBuilder sb = new StringBuilder(90);
+        static char[] buffer = new char[90];
         static CSVMockData cSVMockData = new CSVMockData
         {
             id = "1",
@@ -44,33 +47,36 @@ namespace BenchmarkDotnet效能測試好簡單
         [Benchmark]
         public void Write()
         {
-            string dataLine = "";
-            for (int i = 0; i < props.Length; i++)
+            for (int j = 0; j < 2_500_000; j++)
             {
-                dataLine += props[i].GetValue(cSVMockData).ToString() + ",";
-                //if(i < props.Length - 1)
-                //{
-                //    dataLine += ",";
-                //}
+                string dataLine = "";
+                for (int i = 0; i < props.Length; i++)
+                {
+                    dataLine += props[i].GetValue(cSVMockData).ToString() + ",";
+                }
+                dataLine = dataLine.TrimEnd(',');
+
+
             }
-            dataLine = dataLine.TrimEnd(',');
-            //string dataLine = String.Join(",", props.Select(x => x.GetValue(cSVMockData).ToString()));
         }
 
         [Benchmark]
         public void OptimizeWrite()
         {
-            string dataLine = "";
-            for (int i = 0; i < props.Length; i++)
+            for (int j = 0; j < 2_500_000; j++)
             {
-                dataLine += getter[i](cSVMockData).ToString() + ",";
-                //dataLine += props[i].GetValue(cSVMockData).ToString() + ",";
-                //if (i < props.Length - 1)
-                //{
-                //    dataLine += ",";
-                //}
+                for (int i = 0; i < props.Length; i++)
+                {
+                    sb.Append(getter[i](cSVMockData).ToString());
+                    if (i < props.Length - 1)
+                    {
+                        sb.Append(',');
+                    }
+                }
+                sb.CopyTo(0, buffer, 0, sb.Length);
+                sb.Clear();
             }
-            dataLine = dataLine.TrimEnd(',');
+
         }
 
     }

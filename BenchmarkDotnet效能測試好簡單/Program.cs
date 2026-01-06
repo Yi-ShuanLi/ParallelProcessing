@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Running;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,17 @@ namespace BenchmarkDotnet效能測試好簡單
     {
         static void Main(string[] args)
         {
+
+            //StringBuilder sb = new StringBuilder("37,Breena,Dumbelton,bdumbelton10@constantcontact.com,Female,15.34.171.241", 90);
+            //char[] buffer = new char[90];
+            //sb.CopyTo(0, buffer, 0, sb.Length);
+            //StreamWriter writer = new StreamWriter("D:\\c#_Leo老師\\CSVData\\test\\test.csv", true);
+            //writer.WriteLine(buffer, 0, sb.Length);
+            //writer.Flush();
+            //writer.Close();
+            //sb.Clear();
+
+
             //var summary = BenchmarkRunner.Run<Read_VS_OptimizeRead>();
             var summary = BenchmarkRunner.Run<Write_VS_OptimizeWrite>();
             #region 我的方法

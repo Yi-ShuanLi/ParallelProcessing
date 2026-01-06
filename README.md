@@ -299,3 +299,31 @@
 | ------------- | -------: | -------: | -------: | -----: | --------: |
 | Write         | 816.0 ns | 16.18 ns | 34.14 ns | 0.0954 |     501 B |
 | OptimizeWrite | 218.0 ns |  2.81 ns |  4.38 ns | 0.0954 |     501 B |
+
+### 優化項目 2-3(Writer): 加上反射 & (GetProperty TrimEnd()) 只做一次 & 透過 (delegate & if 邏輯拼接) 製作 Getter 方法
+
+| Method        |     Mean |    Error |   StdDev |   Median |   Gen0 | Allocated |
+| ------------- | -------: | -------: | -------: | -------: | -----: | --------: |
+| Write         | 773.8 ns | 13.83 ns | 31.22 ns | 763.8 ns | 0.0954 |     501 B |
+| OptimizeWrite | 251.3 ns |  5.03 ns |  9.69 ns | 246.1 ns | 0.1135 |     597 B |
+
+### 優化項目 2-4(Writer): 加上反射 & (GetProperty TrimEnd()) 只做一次 & 透過 (delegate & StringBuilder & if 邏輯拼接) 製作 Getter 方法
+
+| Method        |     Mean |    Error |   StdDev |   Median |   Gen0 | Allocated |
+| ------------- | -------: | -------: | -------: | -------: | -----: | --------: |
+| Write         | 927.4 ns | 18.54 ns | 48.19 ns | 906.8 ns | 0.0954 |     501 B |
+| OptimizeWrite | 119.3 ns |  3.87 ns | 11.12 ns | 113.2 ns | 0.0212 |     112 B |
+
+### 優化項目 2-5(Writer): 加上反射 & GetProperty 只做一次 & 透過 delegate 製作 Getter 方法 & 改成 for 迴圈避免 TrimEnd 產生額外字串 & 拿掉一個逗號 & 使用 StringBuilder & 連逗號都直接放到 Builder 裡面 & 執行 Array.Copy 複製記憶體區塊到 buffer
+
+| Method        |     Mean |   Error |  StdDev |   Gen0 | Allocated |
+| ------------- | -------: | ------: | ------: | -----: | --------: |
+| Write         | 641.5 ns | 8.42 ns | 7.88 ns | 0.0954 |     501 B |
+| OptimizeWrite | 105.8 ns | 0.85 ns | 0.75 ns |      - |         - |
+
+### 優化項目 2-6(Writer): 加上反射 & GetProperty 只做一次 & 透過 delegate 製作 Getter 方法 & 改成 for 迴圈避免 TrimEnd 產生額外字串 & 拿掉一個逗號 & 使用 StringBuilder & 連逗號都直接放到 Builder 裡面 & 執行 Array.Copy 複製記憶體區塊到 buffer (250 萬筆)
+
+| Method        |       Mean |    Error |   StdDev |        Gen0 |    Allocated |
+| ------------- | ---------: | -------: | -------: | ----------: | -----------: |
+| Write         | 1,681.0 ms | 24.49 ms | 22.91 ms | 238000.0000 | 1251845700 B |
+| OptimizeWrite |   268.9 ms |  3.36 ms |  3.15 ms |           - |            - |
