@@ -45,7 +45,22 @@ namespace AutoMapper
             //int ROW_COUNT = 12_000_000;
             //int ROW_COUNT = 13_000_000;
             //int ROW_COUNT = 14_000_000;
-            int ROW_COUNT = 15_000_000;
+            //int ROW_COUNT = 15_000_000;
+
+
+
+            //int ROW_COUNT = 10_000_000;
+            //int ROW_COUNT = 12_000_000;
+            //int ROW_COUNT = 20_000_000;
+            //int ROW_COUNT = 24_000_000;
+            //int ROW_COUNT = 30_000_000;
+            //int ROW_COUNT = 40_000_000;
+            //int ROW_COUNT = 48_000_000;
+            int ROW_COUNT = 54_000_000;
+            //int ROW_COUNT = 60_000_000;
+            //int ROW_COUNT = 72_000_000;
+            //int ROW_COUNT = 80_000_000;
+            //int ROW_COUNT = 100_000_000;
             string InputFilePath = $@"D:\c#_Leo老師\CSVData\Input_DATA\MOCK_DATA_{ROW_COUNT}.csv";
             string OutputFilePath = $@"D:\c#_Leo老師\CSVData\Output_DATA\MOCK_DATA_{ROW_COUNT}.csv";
 
@@ -110,7 +125,7 @@ namespace AutoMapper
             Stopwatch totalStopwatch = new Stopwatch();
             totalStopwatch.Start();
             #region Parallel.For 
-            await Parallel.ForAsync(0, times, (x, token) =>
+            await Parallel.ForAsync(0, times, new ParallelOptions() { MaxDegreeOfParallelism = 6 }, (x, token) =>
             {
                 int index = x;
                 int start = index * batchcount;
@@ -118,19 +133,21 @@ namespace AutoMapper
                 Console.WriteLine($"第{index + 1}批資料讀取中，從第{start}到第{end}資料");
                 Stopwatch stopwatch = new Stopwatch();
                 stopwatch.Start();
-                List<DataModel> datas = CSVHelper.Read<DataModel>(InputFilePath, start, batchcount);
+                List<DataModel> datas = CSVHelper.OptimizeRead<DataModel>(InputFilePath, start, batchcount);
+                //List<DataModel> datas = CSVHelper.Read<DataModel>(InputFilePath, start, batchcount);
                 Console.WriteLine($"第{index + 1}批資料讀取完成");
                 stopwatch.Stop();
                 readTimes.Add(stopwatch.Elapsed.TotalSeconds);
                 //==
                 stopwatch.Restart();
                 Console.WriteLine($"第{index + 1}批資料寫入中，從第{start}到第{end}資料");
-                CSVHelper.Write<DataModel>(@$"{OutputDir}\MOCK_DATA_{index}.csv", datas);
+                //CSVHelper.OptimizeWrite<DataModel>(@$"{OutputDir}\MOCK_DATA_{index}.csv", datas);
 
-                //lock (key)
-                //{
-                //    CSVHelper.Write<DataModel>(OutputFilePath, datas);
-                //}
+                lock (key)
+                {
+                    CSVHelper.OptimizeWrite<DataModel>(OutputFilePath, datas);
+                    //CSVHelper.Write<DataModel>(OutputFilePath, datas);
+                }
                 Console.WriteLine($"第{index + 1}批資料寫入完成");
                 stopwatch.Stop();
                 writeTimes.Add(stopwatch.Elapsed.TotalSeconds);

@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallelProcessing", "Paral
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchmarkDotnet效能測試好簡單", "BenchmarkDotnet效能測試好簡單\BenchmarkDotnet效能測試好簡單.csproj", "{6AF5F582-BFC2-4836-B344-34D334B19A4F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "計算行數", "計算行數\計算行數.csproj", "{17C28393-F749-49C5-8940-2CC5D4A02210}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "產生巨大檔案", "產生巨大檔案\產生巨大檔案.csproj", "{3300DB7F-823F-4E42-885D-A4AEA545013D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{6AF5F582-BFC2-4836-B344-34D334B19A4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AF5F582-BFC2-4836-B344-34D334B19A4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AF5F582-BFC2-4836-B344-34D334B19A4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17C28393-F749-49C5-8940-2CC5D4A02210}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17C28393-F749-49C5-8940-2CC5D4A02210}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17C28393-F749-49C5-8940-2CC5D4A02210}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17C28393-F749-49C5-8940-2CC5D4A02210}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3300DB7F-823F-4E42-885D-A4AEA545013D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3300DB7F-823F-4E42-885D-A4AEA545013D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3300DB7F-823F-4E42-885D-A4AEA545013D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3300DB7F-823F-4E42-885D-A4AEA545013D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
